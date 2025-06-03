@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Will you come back to me?</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, rgb(0, 153, 255), white);
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .container {
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    max-width: 400px;
+    width: 90vw;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  }
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  button, a.button {
+    cursor: pointer;
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: transform 0.25s ease, background 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  }
+  button#yes {
+    background-color: #4caf50;
+    box-shadow: 0 6px 20px rgba(76,175,80,0.6);
+  }
+  button#yes:hover {
+    background-color: #45a047;
+    transform: scale(1.05) rotate(2deg);
+  }
+  button#no {
+    background-color: #e53935;
+    box-shadow: 0 6px 20px rgba(229,57,53,0.6);
+    position: relative;
+  }
+  button#no:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05) rotate(-2deg);
+  }
+  /* Page 2 style */
+  .page2 {
+    background: radial-gradient(circle at top left, rgb(0, 153, 255), white);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .note {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    font-size: 2rem;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    user-select: none;
+    text-align: center;
+    animation: bounceIn 0.5s forwards;
+  }
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container" id="page1">
+  <h1>Will you come back to me?</h1>
+  <div class="buttons">
+    <a href="#page2" class="button" id="yes">Yes</a>
+    <button id="no" aria-label="No button">No</button>
+  </div>
+</div>
+<div class="page2" id="page2" style="display:none;">
+  <div class="note">Hiii Kharir</div>
+</div>
+<script>
+  // Handle "No" button that jumps around when hovered or clicked
+  const noBtn = document.getElementById('no');
+  const container = document.querySelector('.container');
+  // Get container dimensions to limit button jump area
+  function moveButton() {
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    const maxX = containerRect.width - btnRect.width - 10;
+    const maxY = containerRect.height - btnRect.height - 10;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = randomX + 'px';
+    noBtn.style.top = randomY + 'px';
+  }
+  // On mouseover and click, move button
+  noBtn.addEventListener('mouseover', moveButton);
+  noBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    moveButton();
+  });
+  // Handle "Yes" button - show second page content
+  const yesBtn = document.getElementById('yes');
+  const page1 = document.getElementById('page1');
+  const page2 = document.getElementById('page2');
+  yesBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    page1.style.display = 'none';
+    page2.style.display = 'flex';
+    setTimeout(() => {
+      page2.style.opacity = '1';
+    }, 10); // Delay to allow display change to take effect
+  });
+</script>
+</body>
+</html>
